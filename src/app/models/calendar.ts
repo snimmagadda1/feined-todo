@@ -1,5 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { addDays, isToday, startOfDay } from 'date-fns';
+import { RxEventDocumentType } from "../services";
+import { RxDocument } from "rxdb";
 
 export interface Day {
   date: Date;
@@ -52,3 +54,22 @@ export const initWeek = () => {
   return week;
 };
 
+export interface ReOrderEvent {
+  dragged: RxDocument<RxEventDocumentType>;
+  prev: {
+    container: string;
+    index: number;
+    list: RxDocument<RxEventDocumentType>[];
+    context: ReOrderEventData;
+  };
+  curr: {
+    container: string;
+    index: number;
+    list: RxDocument<RxEventDocumentType>[];
+    context: ReOrderEventData;
+  };
+}
+
+export interface ReOrderEventData {
+  date: Date;
+}

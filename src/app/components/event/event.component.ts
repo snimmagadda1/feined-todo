@@ -127,6 +127,8 @@ export class EventComponent implements OnInit, AfterViewInit {
     this._eventForm = this.formService.newForm(this._date);
   }
 
+  @Input() index!: number;
+
   @ViewChild('modalTemplate', { read: TemplateRef })
   modalTemplate!: TemplateRef<unknown>;
   templatePortal: TemplatePortal<any> | null = null;
@@ -152,7 +154,7 @@ export class EventComponent implements OnInit, AfterViewInit {
 
   async onFocusOut() {
     if (!this._event && this.title?.value) {
-      this._event = await this.dbService.db.events.insert({
+      const toInsert = {
         id: 'event-' + uuidv4(),
         title: this.title?.value || '',
         date: formatISO(startOfDay(this._date)),
@@ -160,7 +162,10 @@ export class EventComponent implements OnInit, AfterViewInit {
         notes: '',
         color: '',
         timestamp: new Date().getTime(),
-      });
+        index: this.index
+      };
+      console.log('** Inserting event', toInsert);
+      this._event = await this.dbService.db.events.insert(toInsert);
       this.focused = false;
       this.updateForm.emit();
     } else {

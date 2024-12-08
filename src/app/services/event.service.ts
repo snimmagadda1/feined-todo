@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { filter, map, Observable, of, Subject } from 'rxjs';
 import { RxDocument } from 'rxdb';
-import { parseISO, startOfDay } from 'date-fns';
+import { formatISO, parseISO, startOfDay } from 'date-fns';
 import { DbService, RxEventDocumentType } from './db.service';
 
 @Injectable({
@@ -10,9 +10,25 @@ import { DbService, RxEventDocumentType } from './db.service';
 export class EventService {
   public events$: Observable<RxDocument<RxEventDocumentType, {}>[]> = of([]);
 
+  private _dayRefresh$ = new Subject<Date>();
+  private _prevDayRefresh$ = new Subject<Date>();
+
   constructor(private dbService: DbService) {
     this.events$ = this.dbService.db.events.find({
-      sort: [{ timestamp: 'asc'}]
+      sort: [{ index: 'asc' }],
+    }).$;
+  }
+
+  getDayStream$(
+    date: Date
+  ): Observable<RxDocument<RxEventDocumentType>[] | null> {
+    return this.dbService.db.events.find({
+      selector: {
+        date: {
+          $eq: formatISO(startOfDay(date)),
+        },
+      },
+      sort: [{ index: 'asc' }],
     }).$;
   }
 
@@ -26,8 +42,23 @@ export class EventService {
           return eventDate.getTime() === date.getTime();
         });
         return res.length === 0 ? null : res;
-      })
+      }),
+      filter((events) => !!events)
     );
   }
+  get dayRefresh$(): Observable<Date> {
+    return this._dayRefresh$.asObservable();
+  }
 
+  set dayRefresh$(date: Date) {
+    this._dayRefresh$.next(date);
+  }
+
+  get prevDayRefresh$(): Observable<Date> {
+    return this._prevDayRefresh$.asObservable();
+  }
+
+  set prevDayRefresh$(date: Date) {
+    this._prevDayRefresh$.next(date);
+  }
 }
