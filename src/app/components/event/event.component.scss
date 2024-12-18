@@ -1,7 +1,6 @@
 .input-root {
   position: relative;
   height: 40px;
-  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,6 +26,14 @@
 
 .input-root.hover {
   border-bottom: 1px solid #add1dc; // TODO: color scheme vars
+}
+
+// Input and Button shared styles
+input,
+button.title {
+  font-size: 0.9rem;
+  font-family: inherit;
+  line-height: normal;
 }
 
 input {
@@ -72,7 +79,8 @@ i.bi-stickies {
 }
 
 button.title {
-  font-size: 1rem;
+  border: none;
+  background: none;
   border-radius: 11px;
   padding: 0 6px;
   display: inline-block;

@@ -11,7 +11,7 @@ import { AuthService } from './services/auth.service';
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-export const AuthGuard: CanActivateFn = (
+export const CheckAuthGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
 ): Observable<boolean | UrlTree> => {
@@ -21,6 +21,6 @@ export const AuthGuard: CanActivateFn = (
     tap(isAuth => {
       console.log('isAuth', isAuth);
     }),
-    map(isAuth => (isAuth ? true : router.parseUrl('/init'))),
+    map(isAuth => (isAuth ? router.parseUrl('/home') : true)),
   );
 };
