@@ -10,9 +10,10 @@ import swaggerLoader from "./swagger";
 import logger from "../utils/logger";
 import { config } from "../config";
 
-export default async function () {
-  // TODO: await internal backend maps load
-  logger.info("config loaded...", config.server.nodeEnv);
+// exported for ease of testing
+export const load = async () => {
+  logger.info(`config loaded... ${config.server.nodeEnv}`);
+  logger.info(JSON.stringify(config));
 
   await datastoreLoader();
   logger.info("datastore loaded...");
@@ -45,4 +46,8 @@ export default async function () {
 
   // FIXME: remove rxserver
   await _RX_SERVER!.start();
+};
+
+export default async function () {
+  await load();
 }

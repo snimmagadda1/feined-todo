@@ -44,7 +44,7 @@ const collectionSettings = {
 
 export let DB: RxEventsDatabase | null = null;
 
-// FIXME: hack
+// exported to expose express instance
 export let _RX_SERVER: any = null;
 
 type GithubAuthData = {

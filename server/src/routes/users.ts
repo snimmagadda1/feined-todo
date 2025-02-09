@@ -107,11 +107,14 @@ router.get("/:userId", isAuth, (req, res) => {
  *       required:
  *         - email
  *         - name
+ *         - githubId
  *       properties:
  *         email:
  *           type: string
  *           format: email
  *         name:
+ *           type: string
+ *         githubId:
  *           type: string
  *     User:
  *       type: object
@@ -123,11 +126,9 @@ router.get("/:userId", isAuth, (req, res) => {
  *           format: email
  *         name:
  *           type: string
- *         createdAt:
+ *         githubId:
  *           type: string
- *           format: date-time
- *         updatedAt:
- *           type: string
- *           format: date-time
+ *         _deleted:
+ *           type: boolean
  */
 export default router;

@@ -10,9 +10,11 @@ export default async function (app: Express, db: RxEventsDatabase) {
   app.use(sessionMiddleware);
 
   passport.serializeUser((user: any, done) => {
+    logger.info(`passport.js is serializing the user ${user}`);
     done(null, user.id);
   });
   passport.deserializeUser(async (id: string, done) => {
+    logger.info(`passport.js is deserializing the user for id ${id}`);
     try {
       const user = await db.users
         .findOne({

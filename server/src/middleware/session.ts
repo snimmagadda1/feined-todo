@@ -28,11 +28,3 @@ export function isAuth(req: any, res: any, next: any) {
   }
   return next();
 }
-
-// Add to client routes -> simple middleware to ensure user is authenticated
-export function ensureAuthenticated(req: any, res: any, next: any) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/auth/github"); // TODO: login page of client
-}

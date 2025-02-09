@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "bun run src/index.ts",
-    "build": "bun build src/index.ts --target bun --compile --outfile app"
+    "build": "bun build src/index.ts --target bun --compile --outfile app",
+    "test": "bun test"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -17,6 +18,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@types/supertest": "^6.0.2",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
     "colors": "^1.4.0",
@@ -32,6 +34,7 @@
     "rxdb": "16.0.0-beta.10",
     "rxjs": "^7.8.1",
     "snn-rxdb-server": "^0.0.0",
+    "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0",

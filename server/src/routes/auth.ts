@@ -7,7 +7,7 @@ const router = Router();
 router.get(
   "/github",
   (req, res, next) => {
-    logger.info("\n Authenticating with github route...");
+    logger.info("Attempting to auth using github...");
     next();
   },
   passport.authenticate("github", { scope: ["user:email"] })
@@ -25,7 +25,7 @@ router.get(
 
 router.get("/isLoggedIn", (req, res) => {
   if (req.isAuthenticated()) {
-    logger.info("\n User is authenticated");
+    logger.info("User is authenticated");
     res.json({
       authenticated: true,
       user: { ...req.user, email: undefined },
